@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpaceLaunch Tracker — Launch Library 2</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Підключення RxJS 7.8.1 через CDN згідно з методичними вказівками -->
+    <script src="https://unpkg.com/rxjs@7.8.1/dist/bundles/rxjs.umd.min.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-container">
+        <div class="brand">
+          <span class="brand-icon">🚀</span>
+          <div>
+            <h1>SpaceLaunch<span>.live</span></h1>
+            <p class="subtitle">
+              Трекер запланованих космічних запусків (The Space Devs API)
+            </p>
+          </div>
+        </div>
+
+        <div class="sync-panel">
+          <div class="sync-info">
+            <span class="pulse-dot" id="sync-indicator"></span>
+            <span id="last-updated-text">Очікування синхронізації...</span>
+          </div>
+          <button type="button" id="refresh-btn" class="btn btn-secondary">
+            ↻ Оновити зараз
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Панель фільтрації та статистики -->
+      <section class="controls-bar">
+        <div class="filter-group">
+          <label for="agency-select">Космічне агентство:</label>
+          <select id="agency-select">
+            <option value="all">Усі агентства</option>
+          </select>
+        </div>
+
+        <div class="stats-group">
+          <span class="stat-pill"
+            >Показано запусків: <strong id="visible-count">0</strong></span
+          >
+          <span class="stat-pill"
+            >Автооновлення: <strong>кожні 5 хв</strong></span
+          >
+        </div>
+      </section>
+
+      <!-- Блок повідомлення про помилку API -->
+      <section id="error-banner" class="error-banner hidden" role="alert">
+        <div class="error-content">
+          <strong>⚠️ Помилка отримання даних із Launch Library API:</strong>
+          <p id="error-message-text"></p>
+        </div>
+        <button type="button" id="retry-btn" class="btn btn-danger">
+          Спробувати ще раз
+        </button>
+      </section>
+
+      <!-- Індикатор завантаження -->
+      <section id="loader" class="loader-container">
+        <div class="spinner"></div>
+        <p>Завантаження телеметрії найближчих стартів...</p>
+      </section>
+
+      <!-- Сітка карток космічних запусків -->
+      <section id="launches-grid" class="launches-grid" aria-live="polite">
+        <!-- Картки формуються динамічно з даних API -->
+      </section>
+    </main>
+
+    <!-- Модальне вікно деталей місії (Додаткове завдання) -->
+    <div
+      id="mission-modal"
+      class="modal-backdrop hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal-card">
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="modal-close"
+          aria-label="Закрити"
+        >
+          &times;
+        </button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>
+        &copy; 2026 Кафедра АПОТ, ХНУРЕ. Лабораторна робота №2 з ТВР (RxJS +
+        Fetch API).
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
